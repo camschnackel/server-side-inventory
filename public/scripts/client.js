@@ -1,8 +1,29 @@
 $(document).ready(onReady);
 
 function onReady(){
-    console.log('jQuery works!');
+    console.log('ready!');
+    $('#addInventory').on('click', addInventory);
     getInventory();
+};
+
+// event listener
+function addInventory() {
+    // var to hold value from form
+    var itemToAdd = $('#item').val();
+    console.log('addInventory', itemToAdd);
+
+    // var to hold data we want to send to the server
+    var objectToSend = {item: itemToAdd}
+
+    // build post request, post creates on server, get reads
+    $.ajax({
+        type: 'POST',
+        url: '/inventory',
+        data: objectToSend, // data holds value
+        success: function (serverResp) {
+            console.log(serverResp);
+        }
+    });
 };
 
 // ajax functions
@@ -11,7 +32,7 @@ function getInventory() {
 
     //makes get request
     $.ajax({
-        method: 'GET',
+        type: 'GET',
         url: '/inventory',
         success: function (serverResp) {
             // logs when response is made
