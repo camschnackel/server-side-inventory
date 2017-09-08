@@ -1,6 +1,8 @@
 var express = require('express');
-var path = require('path');
 var bodyParser = require('body-parser');
+
+var indexRouter = require('./routes/index');
+
 var app = express();
 
 // global inventory variable
@@ -14,12 +16,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 // client.js, jquery, css
 app.use(express.static('public'));
 
-// Root get route
-app.get('/', function (req, res) {
-    var indexPath = (path.join(__dirname, './public/views/index.html'));
-    // displays content from joined filename onto current get route page
-    res.sendFile(indexPath);
-})
+// Routes
+app.use('/', indexRouter);
 
 // inventory get route
 // every get needs a send, a send is a response sent from the server to display data

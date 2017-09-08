@@ -22,6 +22,7 @@ function addInventory() {
         data: objectToSend, // data holds value
         success: function (serverResp) {
             console.log(serverResp);
+            getInventory();
         }
     });
 };
@@ -35,6 +36,7 @@ function getInventory() {
         type: 'GET',
         url: '/inventory',
         success: function (serverResp) {
+            $('#inventory').empty();
             // logs when response is made
             console.log('inventory resp ->', serverResp);
             for (var i = 0; i < serverResp.length; i++) {
