@@ -20,11 +20,12 @@ router.get('/', function (req, res) {
             // ask the client to run our query
             // param 1 is query itself, 2 is callback
             client.query('SELECT * FROM inventory;', function (queryError, resultObj) {
+                done(); // releases the client
                 if (queryError) {
                     console.log(queryError);
                     res.sendStatus(500);
                 } else {
-                    console.log('resultsObject ->', resultObj);
+                    console.log('resultsObject ->', resultObj.rows);
                     res.send(resultObj.rows);
                 }
             });
