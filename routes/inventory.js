@@ -1,9 +1,6 @@
 var router = require('express').Router();
 var pool = require('../modules/pool');
 
-// global inventory variable
-// var inventory = ['the ring', 'trousers', 'buttons', 'hairy feet'];
-
 // inventory get route
 // every get needs a send, a send is a response sent from the server to display data
 router.get('/', function (req, res) {
