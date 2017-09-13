@@ -40,7 +40,8 @@ function getInventory() {
             // logs when response is made
             console.log('inventory resp ->', serverResp);
             for (var i = 0; i < serverResp.length; i++) {
-                $('#inventory').append('<p>' + serverResp[i]);
+                console.log(serverResp[i]);
+                $('#inventory').append('<p>' + serverResp[i].item);
             }
             
         }
