@@ -29,15 +29,37 @@ router.get('/', function (req, res) {
         }
 
     });
-//    res.send(inventory);
 })
 
 //inventory post route
 router.post('/', function (req, res) {
-    console.log('in post inventory route', req.body);
-    var item = req.body.item;
-    inventory.push(item);
-    res.sendStatus(200);
+    var clientItem = req.body.item;
+    console.log('in post inventory route', clientItem);
+
+    pool.connect(function (connectionError, client, done) {
+        if (connectionError) {
+            console.log(connectionError);
+            res.sendStatus(500);
+            // 500 = something BLEW UP
+        } else {
+            var queryString = 'INSERT INTO inventory (item) VALUES ($1);';
+            var values = [clientItem];
+            client.query(queryString, values, function (queryError, resultObj) {
+            // CONCATINATING VARIABLES IS UNSAFE, use paramterized queries!
+            // query string
+            // values to insert into query
+            // callback function to run when query is complete
+            done();
+            if(queryError){
+                console.log(connectionError);
+                res.sendStatus(500);
+            } else {
+                res.sendStatus(201);
+            }
+            })
+        }
+    })
+
 })
 
 module.exports = router;
