@@ -1,5 +1,3 @@
-$(document).ready(onReady);
-
 function onReady(){
     console.log('ready!');
     $('#addInventory').on('click', addInventory);
@@ -53,9 +51,6 @@ function getInventory() {
 
                 $itemDiv.append($delBtn);
                 $('#inventory').append($itemDiv);
-
-                // console.log('data-id->', $itemDiv.data);
-                
             }
             
         }
@@ -64,5 +59,16 @@ function getInventory() {
 };
 
 function deleteInventory() {
-    console.log('deleteInventory works!');
-}
+    var thisId = $(this).parent().data('id');
+    console.log(thisId);
+
+    $.ajax({
+        method: 'DELETE',
+        url: '/inventory/' + thisId,
+        success: function (resp) {
+            console.log('server resp ->', resp);
+        }
+    });
+};
+
+$(document).ready(onReady);
