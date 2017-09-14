@@ -3,6 +3,7 @@ $(document).ready(onReady);
 function onReady(){
     console.log('ready!');
     $('#addInventory').on('click', addInventory);
+    $('#inventory').on('click', '.deleteMe', deleteInventory);
     getInventory();
 };
 
@@ -62,4 +63,6 @@ function getInventory() {
     
 };
 
-// appen
+function deleteInventory() {
+    console.log('deleteInventory works!');
+}
