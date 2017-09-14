@@ -60,13 +60,14 @@ function getInventory() {
 
 function deleteInventory() {
     var thisId = $(this).parent().data('id');
-    console.log(thisId);
+    console.log('this Id -> ', thisId);
 
     $.ajax({
         method: 'DELETE',
         url: '/inventory/' + thisId,
         success: function (resp) {
             console.log('server resp ->', resp);
+            getInventory();
         }
     });
 };

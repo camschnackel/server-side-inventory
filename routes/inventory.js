@@ -67,8 +67,44 @@ router.delete('/:id', function (req, res) {
     console.log('in delete inventory route');
     console.log('req.params ->', req.params);
     console.log('req.params.id ->', req.params.id);
-    
-    res.sendStatus(200);
+    var dbId = req.params.id;
+    pool.connect(function (connectionError, client, done) {
+        if (connectionError) {
+            console.log(connectionError);
+            res.sendStatus(500);
+            // 500 = something BLEW UP
+        } else {
+            var queryString = 'DELETE FROM inventory WHERE id=$1;';
+            var values = [dbId];
+            console.log('values -> ', values);
+            client.query(queryString, values, function (queryError, resultObj) {
+                // CONCATINATING VARIABLES IS UNSAFE, use paramterized queries!
+                // query string
+                // values to insert into query
+                // callback function to run when query is complete
+                done();
+                if (queryError) {
+                    console.log('connection error -> ', queryError);
+                    res.sendStatus(500);
+                } else {
+                    res.sendStatus(201);
+                }
+            });
+        }
+    });
+    // pool.connect
+
+    // error handling for the connection
+
+    // client.query
+    // test in postico
+    // DELETE * FROM inventory WHERE id=$1, [dbId]
+
+    // error handling for query
+    // if successful respond with a 200 level status code
+
+
+    // res.sendStatus(200); // 202 accepted, 204 No content
 })
 
 module.exports = router;
