@@ -41,7 +41,20 @@ function getInventory() {
             console.log('inventory resp ->', serverResp);
             for (var i = 0; i < serverResp.length; i++) {
                 console.log(serverResp[i]);
-                $('#inventory').append('<p>' + serverResp[i].item);
+                // $('#inventory').append('<p>' + serverResp[i].item);
+
+                // include data id
+                var $itemDiv = $('<div>', {text: serverResp[i].item}).data('id', serverResp[i].id);
+
+                // include a button with class delete me
+                var $delBtn = $('<input>', {value: 'Delete', type: 'button', class: 'deleteMe'});
+
+
+                $itemDiv.append($delBtn);
+                $('#inventory').append($itemDiv);
+
+                // console.log('data-id->', $itemDiv.data);
+                
             }
             
         }
